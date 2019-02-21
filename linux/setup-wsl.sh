@@ -3,8 +3,9 @@
 echo 'Setting up wsl specific stuff'
 
 tmpDir=~/tmp/setup-wsl
+windowsUserName=$(powershell.exe '$env:UserName')
 
-# setup WSL config
+## setup WSL config
 (
     echo '[automount]'
     echo 'enabled = true'
@@ -12,6 +13,16 @@ tmpDir=~/tmp/setup-wsl
     echo 'options = "metadata"'
 )> "$tmpDir/wsl.conf"
 sudo mv "$tmpDir/wsl.conf" /etc/wsl.conf
+
+## symlink go paths
+ln -s ~/go "/c/User/$windowsUserName/go"
+
+## Common aliases
+echo "" >> $HOME/.zshrc
+echo '# Aliases to useful Windows apps' >> $HOME/.zshrc
+echo "alias p=\"powershell.exe\"" >> $HOME/.zshrc
+echo "alias docker=\"docker.exe\"" >> $HOME/.zshrc
+echo "alias docker-compose=\"docker-compose.exe\"" >> $HOME/.zshrc
 
 # setup docker bridge
 # gover=1.11.5

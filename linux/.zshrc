@@ -60,6 +60,7 @@ ZSH_THEME="agnoster"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
   git
+  tmux
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -94,18 +95,10 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 #
 
-# add nvm
-# export NVM_DIR="$HOME/.nvm"
-# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nv
-
-alias p="powershell.exe"
-
 export PATH=~/.dotnet/tools
 
 # golang
 export GOROOT=/usr/local/go
-export GOBIN=/c/Users/me/go/bin
-export GOPATH=/c/Users/me/go
 export PATH="$PATH:/usr/local/go/bin:/c/Users/me/go/bin"
-
-
+export GOBIN=$HOME/go/bin
+export GOPATH=$HOME/go
