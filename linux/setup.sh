@@ -74,8 +74,13 @@ setup_metal() {
 install_shell() {
     ## zsh
     sudo apt-get install zsh -y
+
+    ### addressing bug https://github.com/robbyrussell/oh-my-zsh/issues/4069#issue-89607351
+    ### when installing ohmyzsh
+    git config core.autocrlf false
+
     curl -L http://install.ohmyz.sh | sh
-    chsh -s /bin/zsh ${USER}
+    chsh -s /usr/bin/zsh ${USER}
     wget https://raw.githubusercontent.com/aaronpowell/system-init/master/linux/.zshrc -O ~/.zshrc
 
     ## tmux
