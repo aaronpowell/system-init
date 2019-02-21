@@ -1,0 +1,45 @@
+[user]
+    name = Aaron Powell
+    email = me@aaron-powell.com
+
+[alias]
+    gl = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+    unstage = reset HEAD $1
+    serve = !git daemon --reuseaddr --base-path=. --export-all --verbose --enable=receive-pack ./.git
+    sl = "!f() { x=${1--10}; git log --pretty=format:'%C(yellow)%h %Creset%s%C(bold blue) [%cn]'  $x; }; f"
+    ss = status -s
+    f = "!git ls-files | grep -i"
+    gra = "\"!f() { A=$(pwd) && TOPLEVEL=$(git rev-parse --show-toplevel) && cd $TOPLEVEL && git grep --full-name -In $1 | xargs -I{} echo $TOPLEVEL/{} && cd $A; }; f\""
+    rmb = "!f() { git branch --merged | grep -v "master" | while read i; do git branch -d $i; done; }; f"
+    co = checkout
+    cb = checkout -b
+    wip = !git add -u && git commit -m "WIP"
+    amend = commit -a --amend
+    wipe = !git add -A && git commit -qm 'WIPE SAVEPOINT' && git reset HEAD~1 --hard
+
+[core]
+    autocrlf = true
+    askpass = /usr/libexec/git-core/git-gui--askpass
+
+[push]
+    default = simple
+
+[credential]
+    helper = manager
+# Uncomment for WSL
+#    helper = /mnt/c/Program\\ Files/Git/mingw64/libexec/git-core/git-credential-manager.exe
+
+[code]
+    editor = code-insiders --wait
+
+[merge]
+    tool = vscode
+
+[mergetool "vscode"]
+    cmd = code-insiders --wait $MERGED
+
+[diff]
+    tool = vscode
+
+[difftool "vscode"]
+    cmd = code-insiders --wait --diff $LOCAL $REMOTE
