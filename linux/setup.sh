@@ -1,10 +1,10 @@
 #! /bin/bash
 
 setup_wsl() {
-    echo -e '\e[0;33mSetting up wsl specific stuff'
+    echo -e '\e[0;33mSetting up wsl specific stuff\e[0m'
 
     wslTmpDir=~/tmp/setup-wsl
-    windowsUserName=$(powershell.exe '$env:UserName')
+    windowsUserName=$(powershell.exe '$env:UserName' | sed $'s/\r//')
 
     if [ ! -d "$wslTmpDir" ]; then
         mkdir --parents $wslTmpDir
@@ -20,7 +20,11 @@ setup_wsl() {
     sudo mv "$wslTmpDir/wsl.conf" /etc/wsl.conf
 
     ## symlink go paths
-    ln -s ~/go "/c/User/$windowsUserName/go"
+    if [ ! -d "/c/User/$windowsUserName/go" ]; then
+        echo -e '\e[1;33mIt appears Go is not installed in Windows, skipping symlink\e[0m'
+    else
+        ln -s ~/go "/c/User/$windowsUserName/go"
+    fi
 
     ## Common aliases
     echo "" >> $HOME/.zshrc
@@ -103,7 +107,7 @@ install_docker() {
 
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 
-    sudo add-apt-repository \
+    sudo add-apt-repository --yes \
     "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
     $(lsb_release -cs) \
     stable nightly test"
@@ -115,7 +119,7 @@ install_docker() {
 install_git() {
     echo -e '\e[0;33mInstalling git\e[0m'
 
-    sudo add-apt-repository ppa:git-core/ppa
+    sudo add-apt-repository ppa:git-core/ppa --yes
     sudo apt update
     sudo apt install git -y
     wget https://raw.githubusercontent.com/aaronpowell/system-init/master/common/.gitconfig --output-document ~/.gitconfig
@@ -127,7 +131,7 @@ install_devtools() {
     ## dotnet
     wget -q https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb
     sudo dpkg -i packages-microsoft-prod.deb
-    sudo add-apt-repository universe
+    sudo add-apt-repository universe --yes
     sudo apt-get update
     sudo apt-get install dotnet-sdk-2.2
 
