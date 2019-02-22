@@ -72,6 +72,8 @@ setup_metal() {
 }
 
 install_shell() {
+    echo 'Setting up zsh as the shell'
+
     ## zsh
     sudo apt-get install zsh -y
 
@@ -88,6 +90,8 @@ install_shell() {
 }
 
 install_docker() {
+    echo 'Setting up docker'
+
     sudo apt-get update
     sudo apt-get install \
         apt-transport-https \
@@ -109,6 +113,8 @@ install_docker() {
 }
 
 install_git() {
+    echo 'Installing git'
+
     sudo add-apt-repository ppa:git-core/ppa
     sudo apt update
     sudo apt install git -y
@@ -116,6 +122,8 @@ install_git() {
 }
 
 install_devtools() {
+    echo 'Installing dev software/runtimes/sdks'
+
     ## dotnet
     wget -q https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb
     sudo dpkg -i packages-microsoft-prod.deb
