@@ -1,7 +1,7 @@
 #! /bin/bash
 
 setup_wsl() {
-    echo 'Setting up wsl specific stuff'
+    echo -e '\e[0;33mSetting up wsl specific stuff'
 
     wslTmpDir=~/tmp/setup-wsl
     windowsUserName=$(powershell.exe '$env:UserName')
@@ -46,7 +46,7 @@ setup_wsl() {
 }
 
 setup_metal() {
-    echo 'Starting setup for Linux on base metal'
+    echo -e '\e[0;33mStarting setup for Linux on base metal\e[0m'
 
     ## VSCode
     curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
@@ -72,7 +72,7 @@ setup_metal() {
 }
 
 install_shell() {
-    echo 'Setting up zsh as the shell'
+    echo -e '\e[0;33mSetting up zsh as the shell\e[0m'
 
     ## zsh
     sudo apt-get install zsh -y
@@ -82,7 +82,7 @@ install_shell() {
     git config core.autocrlf false
 
     curl -L http://install.ohmyz.sh | sh
-    chsh -s /usr/bin/zsh ${USER}
+    sudo chsh -s /usr/bin/zsh ${USER}
     wget https://raw.githubusercontent.com/aaronpowell/system-init/master/linux/.zshrc -O ~/.zshrc
 
     ## tmux
@@ -90,7 +90,7 @@ install_shell() {
 }
 
 install_docker() {
-    echo 'Setting up docker'
+    echo -e '\e[0;33mSetting up docker\e[0m'
 
     sudo apt-get update
     sudo apt-get install \
@@ -113,7 +113,7 @@ install_docker() {
 }
 
 install_git() {
-    echo 'Installing git'
+    echo -e '\e[0;33mInstalling git\e[0m'
 
     sudo add-apt-repository ppa:git-core/ppa
     sudo apt update
@@ -122,7 +122,7 @@ install_git() {
 }
 
 install_devtools() {
-    echo 'Installing dev software/runtimes/sdks'
+    echo -e '\e[0;33mInstalling dev software/runtimes/sdks\e[0m'
 
     ## dotnet
     wget -q https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb
@@ -143,7 +143,7 @@ install_devtools() {
     sudo apt install fonts-firacode -y
 }
 
-echo 'Preparing to setup a linux machine from a base install'
+echo -e '\e[0;33mPreparing to setup a linux machine from a base install\e[0m'
 
 gover=1.11.5
 tmpDir=~/tmp/setup-base
