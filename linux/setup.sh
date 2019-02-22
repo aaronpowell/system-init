@@ -112,7 +112,7 @@ install_git() {
     sudo add-apt-repository ppa:git-core/ppa
     sudo apt update
     sudo apt install git -y
-    wget https://raw.githubusercontent.com/aaronpowell/system-init/master/common/.gitconfig -O ~/.gitconfig
+    wget https://raw.githubusercontent.com/aaronpowell/system-init/master/common/.gitconfig --output-document ~/.gitconfig
 }
 
 install_devtools() {
