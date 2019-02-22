@@ -95,7 +95,7 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 #
 
-export PATH=~/.dotnet/tools
+export PATH=~/.dotnet/tools:$PATH
 
 # golang
 export GOROOT=/usr/local/go
