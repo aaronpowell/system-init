@@ -156,12 +156,6 @@ if [ ! -d "$tmpDir" ]; then
     mkdir --parents $tmpDir
 fi
 
-if uname -r | grep -E 'Microsoft$' -q; then
-    wsl=true
-else
-    wsl=false
-fi
-
 ## General updates
 sudo apt-get update
 sudo apt-get upgrade -y
@@ -175,7 +169,7 @@ install_docker
 install_devtools
 
 ## install environment-specific stuff
-if $wsl; then
+if uname -r | grep -E 'Microsoft$' -q; then
     setup_wsl
 else
     setup_metal
