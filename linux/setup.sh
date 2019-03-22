@@ -136,6 +136,7 @@ install_devtools() {
     sudo apt-get install dotnet-sdk-2.2
 
     ## go
+    gover=1.12.1
     wget "https://storage.googleapis.com/golang/go$gover.linux-amd64.tar.gz" --output-document "$tmpDir/go.tar.gz"
     sudo tar -C /usr/local -xzf "$tmpDir/go.tar.gz"
 
@@ -149,7 +150,6 @@ install_devtools() {
 
 echo -e '\e[0;33mPreparing to setup a linux machine from a base install\e[0m'
 
-gover=1.11.5
 tmpDir=~/tmp/setup-base
 
 if [ ! -d "$tmpDir" ]; then
