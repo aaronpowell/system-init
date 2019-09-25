@@ -23,7 +23,7 @@ setup_wsl() {
     if [ ! -d "/c/User/$windowsUserName/go" ]; then
         echo -e '\e[1;33mIt appears Go is not installed in Windows, skipping symlink\e[0m'
     else
-        ln -s ~/go "/c/User/$windowsUserName/go"
+        ln -s "/c/User/$windowsUserName/go" ~/go
     fi
 
     ## Common aliases
