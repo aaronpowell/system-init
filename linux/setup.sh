@@ -137,14 +137,14 @@ install_devtools() {
     
     read -p "Install .NET Preview SDK? (Y/n)" -n 1 -r
     echo
-    if [[ $REPLY =~ ^[Yy]$ ]] then
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
         sudo docker pull mcr.microsoft.com/dotnet/core/5.0.100-preview
     fi
 
     ## go
     read -p "Install Golang? (Y/n)" -n 1 -r
     echo
-    if [[ $REPLY =! ^[Yy]$ ]] then
+    if [[ $REPLY =! ^[Yy]$ ]]; then
         gover=1.14.1
         wget "https://storage.googleapis.com/golang/go$gover.linux-amd64.tar.gz" --output-document "$tmpDir/go.tar.gz"
         sudo tar -C /usr/local -xzf "$tmpDir/go.tar.gz"
