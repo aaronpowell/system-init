@@ -81,10 +81,6 @@ install_shell() {
     ## zsh
     sudo apt-get install zsh -y
 
-    ### addressing bug https://github.com/robbyrussell/oh-my-zsh/issues/4069#issue-89607351
-    ### when installing ohmyzsh
-    git config core.autocrlf false
-
     curl -L http://install.ohmyz.sh | sh
     sudo chsh -s /usr/bin/zsh ${USER}
     wget https://raw.githubusercontent.com/aaronpowell/system-init/master/linux/.zshrc -O ~/.zshrc
@@ -114,6 +110,9 @@ install_docker() {
 
     sudo apt-get update
     sudo apt-get install docker-ce docker-ce-cli containerd.io -y
+    
+    sudo groupadd docker
+    sudo usermod -aG docker $USER
 }
 
 install_git() {
@@ -123,6 +122,7 @@ install_git() {
     sudo apt update
     sudo apt install git -y
     wget https://raw.githubusercontent.com/aaronpowell/system-init/master/common/.gitconfig --output-document ~/.gitconfig
+    git config --global core.autocrlf false
 }
 
 install_devtools() {
@@ -133,12 +133,22 @@ install_devtools() {
     sudo dpkg -i packages-microsoft-prod.deb
     sudo add-apt-repository universe --yes
     sudo apt-get update
-    sudo apt-get install dotnet-sdk-2.2
+    sudo apt-get install dotnet-sdk-2.2 dotnet-sdk-3.1 -y
+    
+    read -p "Install .NET Preview SDK? (Y/n)" -n 1 -r
+    echo
+    if [[ $REPLY =~ ^[Yy]$ ]] then
+        sudo docker pull mcr.microsoft.com/dotnet/core/5.0.100-preview
+    fi
 
     ## go
-    gover=1.12.1
-    wget "https://storage.googleapis.com/golang/go$gover.linux-amd64.tar.gz" --output-document "$tmpDir/go.tar.gz"
-    sudo tar -C /usr/local -xzf "$tmpDir/go.tar.gz"
+    read -p "Install Golang? (Y/n)" -n 1 -r
+    echo
+    if [[ $REPLY =! ^[Yy]$ ]] then
+        gover=1.14.1
+        wget "https://storage.googleapis.com/golang/go$gover.linux-amd64.tar.gz" --output-document "$tmpDir/go.tar.gz"
+        sudo tar -C /usr/local -xzf "$tmpDir/go.tar.gz"
+    fi
 
     ## Node.js via fnm
     curl https://raw.githubusercontent.com/Schniz/fnm/master/.ci/install.sh | bash
@@ -161,18 +171,11 @@ sudo apt-get update
 sudo apt-get upgrade -y
 
 ## Utilities
-sudo apt-get install unzip
+sudo apt-get install unzip curl -y
 
-install_shell
 install_git
+install_shell
 install_docker
 install_devtools
-
-## install environment-specific stuff
-if uname -r | grep -E 'Microsoft$' -q; then
-    setup_wsl
-else
-    setup_metal
-fi
 
 rm -rf $tmpDir
