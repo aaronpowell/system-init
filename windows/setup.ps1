@@ -39,6 +39,8 @@ function Install-PowerShellModule {
 Install-Chocolatey
 
 Install-FromChocolatey 'git'
+Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/aaronpowell/system-init/master/common/.gitconfig' -OutFile (Join-Path $env:USERPROFILE '.gitconfig')
+
 Install-FromChocolatey 'vscode-insiders'
 Install-FromChocolatey 'dotnetcore-sdk'
 Install-FromChocolatey 'microsoft-windows-terminal'
@@ -49,5 +51,8 @@ Install-FromChocolatey 'linqpad'
 Install-FromChocolatey 'firefox'
 Install-FromChocolatey 'googlechrome'
 
-Install-Module 'Posh-Git' { Add-PoshGitToProfile -AllHosts }
-Install-Module 'nvm' { Install-NodeVersion latest; Set-NodeVersion -Persist User latest }
+Install-Module 'Posh-Git' -PostInstall { Add-PoshGitToProfile -AllHosts }
+Install-Module 'nvm' -PostInstall {
+    Install-NodeVersion latest
+    Set-NodeVersion -Persist User latest
+}
