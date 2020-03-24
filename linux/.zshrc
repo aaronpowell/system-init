@@ -100,3 +100,7 @@ source $ZSH/oh-my-zsh.sh
 #
 
 export PATH=~/.dotnet/tools:$PATH
+
+# fnm
+export PATH=/home/aaron/.fnm:$PATH
+eval "`fnm env --multi`"

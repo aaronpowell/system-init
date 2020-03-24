@@ -145,7 +145,7 @@ install_devtools() {
     ## go
     read -p "Install Golang? (Y/n)" -n 1 -r
     echo
-    if [[ $REPLY =! ^[Yy]$ ]]
+    if [[ $REPLY =~ ^[Yy]$ ]]
     then
         gover=1.14.1
         wget "https://storage.googleapis.com/golang/go$gover.linux-amd64.tar.gz" --output-document "$tmpDir/go.tar.gz"
