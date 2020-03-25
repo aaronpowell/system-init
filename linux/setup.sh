@@ -123,6 +123,7 @@ install_git() {
     sudo apt install git -y
     wget https://raw.githubusercontent.com/aaronpowell/system-init/master/common/.gitconfig --output-document ~/.gitconfig
     git config --global core.autocrlf false
+    git config --global credential.helper '/mnt/c/Program\\ Files/Git/mingw64/libexec/git-core/git-credential-manager.exe'
 }
 
 install_devtools() {
