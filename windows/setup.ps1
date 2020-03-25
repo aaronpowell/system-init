@@ -44,7 +44,6 @@ Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/aaronpowell/system-ini
 Install-FromChocolatey 'vscode-insiders'
 Install-FromChocolatey 'dotnetcore-sdk'
 Install-FromChocolatey 'microsoft-windows-terminal'
-Install-FromChocolatey 'azurestorageemulator'
 Install-FromChocolatey 'fiddler'
 Install-FromChocolatey 'postman'
 Install-FromChocolatey 'linqpad'
