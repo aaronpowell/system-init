@@ -21,7 +21,7 @@ function Install-PowerShellModule {
         $ModuleName,
 
         [ScriptBlock]
-        [Parameter]
+        [Parameter(Mandatory = $true)]
         $PostInstall = {}
     )
 
@@ -51,8 +51,8 @@ Install-FromChocolatey 'linqpad'
 Install-FromChocolatey 'firefox'
 Install-FromChocolatey 'googlechrome'
 
-Install-Module 'Posh-Git' -PostInstall { Add-PoshGitToProfile -AllHosts }
-Install-Module 'nvm' -PostInstall {
+Install-PowerShellModule 'Posh-Git' { Add-PoshGitToProfile -AllHosts }
+Install-PowerShellModule 'nvm' {
     Install-NodeVersion latest
     Set-NodeVersion -Persist User latest
 }
