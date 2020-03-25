@@ -11,7 +11,7 @@ function Install-FromChocolatey {
         $PackageName
     )
 
-    choco install $PackageName
+    choco install $PackageName --yes
 }
 
 function Install-PowerShellModule {
