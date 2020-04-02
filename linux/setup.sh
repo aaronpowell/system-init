@@ -83,10 +83,20 @@ install_shell() {
 
     curl -L http://install.ohmyz.sh | sh
     sudo chsh -s /usr/bin/zsh ${USER}
-    wget https://raw.githubusercontent.com/aaronpowell/system-init/master/linux/.zshrc -O ~/.zshrc
 
     ## tmux
     sudo apt install tmux -y
+    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+}
+
+install_dotfiles() {
+    echo -e '\e[0;33mSetting up standard dotfiles\e[0m'
+
+    git clone https://github.com/aaronpowell/system-init ~/code/github/system-init
+
+    ln -s ~/code/github/system-init/linux/.zshrc ~/.zshrc
+    ln -s ~/code/github/system-init/linux/.tmux.conf ~/.tmux/.tmux.conf
+    ln -s ~/code/github/system-init/linux/.vimrc ~/.vimrc
 }
 
 install_docker() {
@@ -175,6 +185,9 @@ sudo apt-get upgrade -y
 
 ## Utilities
 sudo apt-get install unzip curl -y
+
+# Create standard github clone location
+mkdir -p ~/code/github
 
 install_git
 install_shell
