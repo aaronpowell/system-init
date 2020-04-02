@@ -38,4 +38,4 @@ if [ "$WIDTH" -ge "$SMALL" ]; then
   CLEAR=""
 fi
 
-echo "$DATE $TIME " | sed 's/ *$/ /g'
+echo "$DATE $TIME" | sed 's/ *$/ /g'
