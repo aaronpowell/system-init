@@ -13,6 +13,4 @@ else
     PUBLIC_IP=$(curl -4 ifconfig.co)
 fi
  
-INTERNET='📡'
-
-echo -n "#[fg=colour150]$INTERNET #[fg=colour197]$IP | $PUBLIC_IP"
+echo -n "🏠#[fg=colour197]$IP 📡$PUBLIC_IP"
