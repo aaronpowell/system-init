@@ -85,7 +85,7 @@ install_shell() {
     sudo chsh -s /usr/bin/zsh ${USER}
 
     ## tmux
-    sudo apt install tmux -y
+    sudo apt install tmux urlview -y
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 }
 
@@ -97,6 +97,9 @@ install_dotfiles() {
     ln -s ~/code/github/system-init/linux/.zshrc ~/.zshrc
     ln -s ~/code/github/system-init/linux/.tmux.conf ~/.tmux/.tmux.conf
     ln -s ~/code/github/system-init/linux/.vimrc ~/.vimrc
+    ln -s ~/code/github/system-init/linux/.urlview ~/.urlview
+
+    tmux source ~/.tmux/.tmux.conf
 }
 
 install_docker() {
@@ -123,6 +126,7 @@ install_docker() {
     
     sudo groupadd docker
     sudo usermod -aG docker $USER
+    sudo /etc/init.d/docker start
 }
 
 install_git() {
