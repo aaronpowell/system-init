@@ -113,7 +113,7 @@ sudo apt-get update
 sudo apt-get upgrade -y
 
 ## Utilities
-sudo apt-get install unzip curl -y
+sudo apt-get install unzip curl jq -y
 
 # Create standard github clone location
 mkdir -p ~/code/github
