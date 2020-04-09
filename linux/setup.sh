@@ -94,10 +94,6 @@ install_devtools() {
 
     ## Node.js via fnm
     curl https://raw.githubusercontent.com/Schniz/fnm/master/.ci/install.sh | bash
-
-    ## firacode
-    sudo add-apt-repository universe
-    sudo apt install fonts-firacode -y
 }
 
 echo -e '\e[0;33mPreparing to setup a linux machine from a base install\e[0m'
