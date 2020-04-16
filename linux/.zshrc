@@ -66,6 +66,8 @@ ZSH_TMUX_CONFIG=~/.tmux/.tmux.conf
 plugins=(
   git
   tmux
+  globalias
+  common-aliases
 )
 
 source $ZSH/oh-my-zsh.sh
