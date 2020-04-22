@@ -49,9 +49,14 @@ Install-FromChocolatey 'postman'
 Install-FromChocolatey 'linqpad'
 Install-FromChocolatey 'firefox'
 Install-FromChocolatey 'googlechrome'
+Install-FromChocolatey 'powershell-core'
 
 Install-PowerShellModule 'Posh-Git' { Add-PoshGitToProfile -AllHosts }
+Install-PowerShellModule 'oh-my-posh' { }
+Install-PowerShellModule 'PSReadLine' { }
 Install-PowerShellModule 'nvm' {
     Install-NodeVersion latest
     Set-NodeVersion -Persist User latest
 }
+
+Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/aaronpowell/system-init/master/windows/Microsoft.PowerShell_profile.ps1' -OutFile $PROFILE

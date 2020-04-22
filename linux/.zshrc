@@ -109,3 +109,7 @@ export PATH=/home/aaron/.fnm:$PATH
 eval "`fnm env --multi`"
 
 alias cdg="cd ~/code/github"
+
+export PATH=$PATH:/usr/local/go/bin
+export GOROOT=/usr/local/go
+export GOPATH=~/.go
