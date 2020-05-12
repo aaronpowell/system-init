@@ -1,5 +1,9 @@
 #! /bin/bash
 
+log() {
+    echo $1 >> ~/env-setup.log
+}
+
 install_shell() {
     echo -e '\e[0;33mSetting up zsh as the shell\e[0m'
 
@@ -7,10 +11,18 @@ install_shell() {
     sudo apt-get install zsh -y
 
     curl -L http://install.ohmyz.sh | sh
-    sudo chsh -s /usr/bin/zsh ${USER}
+    {
+        CMD="$( sudo chsh -s /usr/bin/zsh ${USER} )"
+    } || {
+        log "Failed to set zsh as default shell: $CMD"
+    }
 
     ## tmux
-    sudo apt install tmux urlview -y
+    {
+        CMD="$( sudo apt install tmux urlview -y )"
+    } || {
+        log "Failed to install tmux & urlview: $CMD"
+    }
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 }
 
@@ -19,10 +31,12 @@ install_dotfiles() {
 
     git clone https://github.com/aaronpowell/system-init ~/code/github/system-init
 
-    ln -s ~/code/github/system-init/linux/.zshrc ~/.zshrc
-    ln -s ~/code/github/system-init/linux/.tmux.conf ~/.tmux/.tmux.conf
-    ln -s ~/code/github/system-init/linux/.vimrc ~/.vimrc
-    ln -s ~/code/github/system-init/linux/.urlview ~/.urlview
+    LINUX_SCRIPTS_DIR="$( cd "$( dirname "$0" )" >/dev/null 2>&1 && pwd )"
+
+    ln -s $LINUX_SCRIPTS_DIR/.zshrc ~/.zshrc
+    ln -s $LINUX_SCRIPTS_DIR/.tmux.conf ~/.tmux/.tmux.conf
+    ln -s $LINUX_SCRIPTS_DIR/.vimrc ~/.vimrc
+    ln -s $LINUX_SCRIPTS_DIR/.urlview ~/.urlview
 
     tmux source ~/.tmux/.tmux.conf
 }
@@ -62,7 +76,12 @@ install_git() {
     sudo apt install git -y
     wget https://raw.githubusercontent.com/aaronpowell/system-init/master/common/.gitconfig --output-document ~/.gitconfig
     git config --global core.autocrlf false
-    git config --global credential.helper '/mnt/c/Program\\ Files/Git/mingw64/libexec/git-core/git-credential-manager.exe'
+
+    ## Only setup cred manager if it's wsl
+    if [[ "$WSLENV" ]]
+    then
+        git config --global credential.helper '/mnt/c/Program\\ Files/Git/mingw64/libexec/git-core/git-credential-manager.exe'
+    fi
 }
 
 install_devtools() {
@@ -116,7 +135,7 @@ mkdir -p ~/code/github
 
 install_git
 install_shell
-install_docker
 install_devtools
+install_docker
 
 rm -rf $tmpDir
