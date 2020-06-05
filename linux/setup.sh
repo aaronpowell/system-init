@@ -16,6 +16,9 @@ install_shell() {
     } || {
         log "Failed to set zsh as default shell: $CMD"
     }
+    ZSH_CUSTOM=~/.oh-my-zsh/custom
+    git clone https://github.com/denysdovhan/spaceship-prompt.git "$ZSH_CUSTOM/themes/spaceship-prompt"
+    ln -s "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" "$ZSH_CUSTOM/themes/spaceship.zsh-theme"
 
     ## tmux
     {
