@@ -114,4 +114,4 @@ export PATH=$PATH:/usr/local/go/bin
 export GOROOT=/usr/local/go
 export GOPATH=~/.go
 alias clip="clip.exe"
-
+alias exp="explorer.exe"
