@@ -1,7 +1,6 @@
 #!/bin/bash
 
-if tasklist.exe | grep 'obs' -q
-then
+if $(tasklist.exe | grep 'obs' -q) || ! $(tmux show-option -gqv @show-network); then
   echo -n "🏠 #[fg=colour197]192.168.0.0 #[fg=black]|#[fg=colour197] 📡 255.255.255.256"
 else
   # Internal IP
@@ -13,7 +12,7 @@ else
       PUBLIC_IP="Not Available"
   elif [[ "$PUBLIC_IP" = "" ]]; then
       PUBLIC_IP="No external access"
-  else 
+  else
       PUBLIC_IP=$(curl -4 ifconfig.co)
   fi
 
