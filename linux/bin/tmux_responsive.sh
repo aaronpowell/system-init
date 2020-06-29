@@ -27,7 +27,8 @@ MEDIUM=107
 LARGE=125
 
 if [ "$WIDTH" -ge "$LARGE" ]; then
-  DATE="#[fg=colour255,bg=colour241,bold] $SEASON $(date +'%a %d-%m-%y')"
+  FORECAST=$(curl wttr.in?format="%C+%t+%w")
+  DATE="#[fg=colour255,bg=colour241,bold] $(date +'%a %d-%m-%y') $SEASON $FORECAST"
 fi
 
 if [ "$WIDTH" -ge "$MEDIUM" ]; then
