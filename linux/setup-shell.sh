@@ -26,6 +26,12 @@ install_shell() {
         log "Failed to install tmux & urlview: $CMD"
     }
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
+    ## install GitHub CLI
+    sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key C99B11DEB97541F0
+    sudo apt-add-repository https://cli.github.com/packages
+    sudo apt update
+    sudo apt install gh
 }
 
 install_dotfiles() {
@@ -41,6 +47,7 @@ install_dotfiles() {
     ln -s $LINUX_SCRIPTS_DIR/.urlview ~/.urlview
     ln -s $LINUX_SCRIPTS_DIR/../common/.gitconfig ~/.gitconfig
     git config --global core.autocrlf false
+    ln -s $LINUX_SCRIPTS_DIR/../common/gh-config.yml ~/.config/gh/config.yml
 
     ## Only setup cred manager if it's wsl
     if [[ "$WSLENV" ]]
