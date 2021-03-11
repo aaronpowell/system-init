@@ -28,8 +28,10 @@ aliases:
           url=$(echo $res | jq -r '.html_url')
           status=$(echo $res | jq -r '.status')
           name=$(echo $res | jq -r '.name')
+          id=$(echo $res | jq -r '.id')
           created=$(echo $res | jq -r '.created_at' | xargs date '+%A %b %d @ %H:%m' --date)
           echo '\e[1;34m'$name'\e[0m' \($url\)
+          echo '\e[1;34m'$id'\e[0m'
           echo '\t'Started: '\e[1;33m'$created'\e[0m'
           case $status in
             completed)
@@ -58,3 +60,43 @@ aliases:
           echo '\t\t'Returns the names of all workflows for the repo
           ;;
         esac)
+
+    deploy: |-
+      !(case $1 in
+        get)
+          if [ -z "$2" ]
+          then
+            read -p 'Run ID: ' runId
+          else
+            runId=$2
+          fi
+          res=$(gh api /repos/:owner/:repo/actions/runs/$runId/pending_deployments --jq "map({ id: .environment.id, url: .environment.url, name: .environment.name, reviewers: .reviewers | map({ type: .type, name: (if .type == \"Team\" then .reviewer.name else .reviewer.login end) }) }) | first")
+          echo '\e[1;34m'Deployment '\e[1;32m'$(echo $res | jq -r '.id') '\e[1;34m'pending to '\e[1;32m'$(echo $res | jq -r '.name')'\e[0m'
+          echo '\t'Approvers: $(echo $res | jq -r '.reviewers | map(.name)')
+          echo '\t'$(echo $res | jq -r '.url')
+        ;;
+
+        approve)
+        if [ -z "$2" ]
+        then
+          read -p 'Run ID: ' runId
+        else
+            runId=$2
+        fi
+        if [ -z "$3" ]
+        then
+          read -p 'Environment ID: ' envId
+        else
+            envId=$3
+        fi
+        if [ -z "$4" ]
+        then
+          read -p 'Comment: ' comment
+        else
+            comment=$4
+        fi
+
+          res=$(echo "{\"environment_ids\":[$envId],\"state\":\"approved\",\"comment\":\"$comment\"}" | gh api --method POST /repos/:owner/:repo/actions/runs/$runId/pending_deployments --input -)
+          echo "Deployment approved"
+        ;;
+      esac)
