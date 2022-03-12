@@ -1,19 +1,3 @@
-function Install-Chocolatey {
-    Set-ExecutionPolicy Bypass -Scope Process -Force;
-    [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072;
-    iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
-}
-
-function Install-FromChocolatey {
-    param(
-        [string]
-        [Parameter(Mandatory = $true)]
-        $PackageName
-    )
-
-    choco install $PackageName --yes
-}
-
 function Install-PowerShellModule {
     param(
         [string]
@@ -36,27 +20,78 @@ function Install-PowerShellModule {
     }
 }
 
-Install-Chocolatey
+Write-Host Installing winget packages
 
-Install-FromChocolatey 'git'
-Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/aaronpowell/system-init/master/common/.gitconfig' -OutFile (Join-Path $env:USERPROFILE '.gitconfig')
+$packages = @(
+    # Dev Tools
+    'Git.Git',
+    'GitHub.cli',
+    'LINQPad.LINQPad.7',
+    'Microsoft.WindowsTerminal.Preview',
+    'Docker.DockerDesktop',
+    'icsharpcode.ILSpy',
 
-Install-FromChocolatey 'vscode-insiders'
-Install-FromChocolatey 'dotnetcore-sdk'
-Install-FromChocolatey 'microsoft-windows-terminal'
-Install-FromChocolatey 'fiddler'
-Install-FromChocolatey 'postman'
-Install-FromChocolatey 'linqpad'
-Install-FromChocolatey 'firefox'
-Install-FromChocolatey 'googlechrome'
-Install-FromChocolatey 'powershell-core'
+    # Editors
+    'Microsoft.VisualStudioCode.Insiders',
 
-Install-PowerShellModule 'Posh-Git' { Add-PoshGitToProfile -AllHosts }
+    # Inspectors
+    'Telerik.Fiddler.Classic',
+    'Postman.Postman',
+
+    # Browsers
+    'Mozilla.Firefox',
+    'Google.Chrome',
+    'Microsoft.Edge.Dev',
+    'Microsoft.Edge.Beta',
+
+    # Chat
+    'Discord.Discord',
+    'SlackTechnologies.Slack',
+    'OpenWhisperSystems.Signal',
+
+    # Video
+    'OBSProject.OBSStudio',
+    'Nvidia.Broadcast',
+    'XSplit.VCam',
+    'VB-Audio.Voicemeeter.Potato',
+    'Elgato.StreamDeck',
+    'Elgato.ControlCenter',
+
+    # Misc
+    'Microsoft.Powershell.Preview',
+    'Microsoft.PowerToys',
+    'Microsoft.OneDrive',
+    'Nvidia.GeForceExperience',
+    'Logitech.Options',
+    'NickeManarin.ScreenToGif',
+    'Valve.Steam',
+    'Microsoft.Office'
+)
+
+$packages | ForEach-Object { winget install --id $_ --source winget }
+
+Write-Host Installing PowerShell Modules
+
+Install-PowerShellModule 'Posh-Git' { }
 Install-PowerShellModule 'oh-my-posh' { }
 Install-PowerShellModule 'PSReadLine' { }
+Install-PowerShellModule 'Terminal-Icons' { }
 Install-PowerShellModule 'nvm' {
     Install-NodeVersion latest
     Set-NodeVersion -Persist User latest
 }
 
+Write-Host Setting up dotfiles
+
+Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/aaronpowell/system-init/master/common/.gitconfig' -OutFile (Join-Path $env:USERPROFILE '.gitconfig')
 Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/aaronpowell/system-init/master/windows/Microsoft.PowerShell_profile.ps1' -OutFile $PROFILE
+
+Write-Host Installing additional software
+
+wsl --install
+
+Write-Host Manuall install the following
+Write-Host "- Wally (moonlander tool)"
+Write-Host "- Visual Studio DF"
+Write-Host "- Edge Canary"
+Write-Host "- caskaydiacove nf: https://www.nerdfonts.com/font-downloads"

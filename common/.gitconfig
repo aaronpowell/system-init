@@ -10,7 +10,7 @@
     ss = status -s
     f = "!git ls-files | grep -i"
     gra = "\"!f() { A=$(pwd) && TOPLEVEL=$(git rev-parse --show-toplevel) && cd $TOPLEVEL && git grep --full-name -In $1 | xargs -I{} echo $TOPLEVEL/{} && cd $A; }; f\""
-    rmb = "!f() { git branch --merged | grep -v "master" | while read i; do git branch -d $i; done; }; f"
+    rmb = "!f() { git branch --merged | grep -v "main" | while read i; do git branch -d $i; done; }; f"
     co = checkout
     cb = checkout -b
     wip = !git add -u && git commit -m "WIP"
@@ -18,16 +18,15 @@
     wipe = !git add -A && git commit -qm 'WIPE SAVEPOINT' && git reset HEAD~1 --hard
 
 [core]
-    autocrlf = true
     askpass = /usr/libexec/git-core/git-gui--askpass
 
 [push]
     default = simple
 
 [credential]
-    # helper = manager
+    helper = manager
 # Uncomment for WSL
-    helper = /mnt/c/Program\\ Files/Git/mingw64/libexec/git-core/git-credential-manager-core.exe
+    # helper = /mnt/c/Program\\ Files/Git/mingw64/libexec/git-core/git-credential-manager-core.exe
 
 [code]
     editor = code-insiders --wait
