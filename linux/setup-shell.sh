@@ -20,12 +20,12 @@ install_shell() {
     ln -s "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" "$ZSH_CUSTOM/themes/spaceship.zsh-theme"
 
     ## tmux
-    {
-        CMD="$( sudo apt install tmux urlview -y )"
-    } || {
-        log "Failed to install tmux & urlview: $CMD"
-    }
-    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+    # {
+    #     CMD="$( sudo apt install tmux urlview -y )"
+    # } || {
+    #     log "Failed to install tmux & urlview: $CMD"
+    # }
+    # git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
     ## install GitHub CLI
     sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key C99B11DEB97541F0
@@ -42,7 +42,7 @@ install_dotfiles() {
     LINUX_SCRIPTS_DIR="$( cd "$( dirname "$0" )" >/dev/null 2>&1 && pwd )"
 
     ln -s $LINUX_SCRIPTS_DIR/.zshrc ~/.zshrc
-    ln -s $LINUX_SCRIPTS_DIR/.tmux.conf ~/.tmux/.tmux.conf
+    # ln -s $LINUX_SCRIPTS_DIR/.tmux.conf ~/.tmux/.tmux.conf
     ln -s $LINUX_SCRIPTS_DIR/.vimrc ~/.vimrc
     ln -s $LINUX_SCRIPTS_DIR/.urlview ~/.urlview
     ln -s $LINUX_SCRIPTS_DIR/../common/.gitconfig ~/.gitconfig
@@ -55,7 +55,7 @@ install_dotfiles() {
         git config --global credential.helper '/mnt/c/Program\\ Files/Git/mingw64/libexec/git-core/git-credential-manager.exe'
     fi
 
-    tmux source ~/.tmux/.tmux.conf
+    # tmux source ~/.tmux/.tmux.conf
 }
 
 install_dotfiles
