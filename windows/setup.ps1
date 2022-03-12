@@ -95,3 +95,9 @@ Write-Host "- Wally (moonlander tool)"
 Write-Host "- Visual Studio DF"
 Write-Host "- Edge Canary"
 Write-Host "- caskaydiacove nf: https://www.nerdfonts.com/font-downloads"
+
+Write-Host OBS Plugins
+Write-Host "- Stream Elements"
+Write-Host "- Advanced Scene Switcher"
+Write-Host "- OBS WebSockets"
+Write-Host "- StreamFX"
