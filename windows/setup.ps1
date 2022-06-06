@@ -11,8 +11,8 @@ function Install-PowerShellModule {
 
     if (!(Get-Command -Name $ModuleName -ErrorAction SilentlyContinue)) {
         Write-Host "Installing $ModuleName"
-        Install-Module -Name $ModuleName -Scope CurrentUser -Confirm $true
-        Import-Module $ModuleName -Confirm
+        Install-Module -Name $ModuleName -Scope CurrentUser
+        Import-Module $ModuleName
 
         Invoke-Command -ScriptBlock $PostInstall
     }
@@ -36,6 +36,7 @@ $packages = @(
     'Microsoft.WindowsTerminal.Preview',
     'Docker.DockerDesktop',
     'icsharpcode.ILSpy',
+    'JanDeDobbeleer.OhMyPosh',
 
     # Editors
     'Microsoft.VisualStudioCode.Insiders',
@@ -82,8 +83,9 @@ $packages | ForEach-Object { winget install --id $_ --source winget }
 
 Write-Host Installing PowerShell Modules
 
+Set-ExecutionPolicy -ExecutionPolicy Unrestricted
+
 Install-PowerShellModule 'Posh-Git' { }
-Install-PowerShellModule 'oh-my-posh' { }
 Install-PowerShellModule 'PSReadLine' { }
 Install-PowerShellModule 'Terminal-Icons' { }
 Install-PowerShellModule 'nvm' {
@@ -97,6 +99,7 @@ $repoBaseUrl = 'https://raw.githubusercontent.com/aaronpowell/system-init/main'
 
 Invoke-WebRequest -Uri "$repoBaseUrl/common/.gitconfig" -OutFile (Join-Path $env:USERPROFILE '.gitconfig')
 Invoke-WebRequest -Uri "$repoBaseUrl/windows/Microsoft.PowerShell_profile.ps1" -OutFile $PROFILE
+Invoke-WebRequest -Uri "$repoBaseUrl/windows/Microsoft.PowerShell_profile.ps1" -OutFile $PROFILE.Replace("WindowsPowerShell", "PowerShell")
 
 Write-Host Installing additional software
 
