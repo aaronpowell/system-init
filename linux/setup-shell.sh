@@ -52,7 +52,7 @@ install_dotfiles() {
     ## Only setup cred manager if it's wsl
     if [[ "$WSLENV" ]]
     then
-        git config --global credential.helper '/mnt/c/Program\\ Files/Git/mingw64/libexec/git-core/git-credential-manager.exe'
+        git config --global credential.helper '/mnt/c/Program\ Files/Git/mingw64/bin/git-credential-manager-core.exe'
     fi
 
     # tmux source ~/.tmux/.tmux.conf
