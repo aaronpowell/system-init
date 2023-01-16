@@ -13,6 +13,7 @@
     rmb = "!f() { git branch --merged | grep -v "main" | while read i; do git branch -d $i; done; }; f"
     co = checkout
     cb = checkout -b
+    cm = commit -m
     wip = !git add -u && git commit -m "WIP"
     amend = commit -a --amend
     wipe = !git add -A && git commit -qm 'WIPE SAVEPOINT' && git reset HEAD~1 --hard
@@ -24,9 +25,9 @@
     default = simple
 
 [credential]
-    helper = manager
+    # helper = manager
 # Uncomment for WSL
-    # helper = /mnt/c/Program\\ Files/Git/mingw64/libexec/git-core/git-credential-manager-core.exe
+	helper = /mnt/c/Program\\ Files/Git/mingw64/bin/git-credential-manager-core.exe
 
 [code]
     editor = code-insiders --wait
@@ -44,3 +45,5 @@
     cmd = code-insiders --wait --diff $LOCAL $REMOTE
 [init]
 	defaultBranch = main
+[pull]
+	rebase = false
