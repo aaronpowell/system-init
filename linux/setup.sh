@@ -39,35 +39,25 @@ install_git() {
     sudo apt install git -y
 }
 
-install_devtools() {
-    echo -e '\e[0;33mInstalling dev software/runtimes/sdks\e[0m'
+install_github_cli() {
+    echo -e '\e[0;33mInstalling GitHub CLI\e[0m'
+    type -p curl >/dev/null || sudo apt install curl -y
+    curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg \
+    && sudo chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg \
+    && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
+    && sudo apt update \
+    && sudo apt install gh -y
+}
+
+install_dotnet() {
+    echo -e '\e[0;33mInstalling dotnet\e[0m'
 
     ## dotnet
-    wget -q https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb
+    wget -q https://packages.microsoft.com/config/ubuntu/$(lsb_release --release -s)/packages-microsoft-prod.deb
     sudo dpkg -i packages-microsoft-prod.deb
     sudo add-apt-repository universe --yes
     sudo apt-get update
-    sudo apt-get install dotnet-sdk-2.2 dotnet-sdk-3.1 -y
-    
-    read -p "Install .NET Preview SDK? (Y/n)" -n 1 -r
-    echo
-    if [[ $REPLY =~ ^[Yy]$ ]]
-    then
-        sudo docker pull mcr.microsoft.com/dotnet/core/5.0.100-preview
-    fi
-
-    ## go
-    read -p "Install Golang? (Y/n)" -n 1 -r
-    echo
-    if [[ $REPLY =~ ^[Yy]$ ]]
-    then
-        gover=1.14.1
-        wget "https://storage.googleapis.com/golang/go$gover.linux-amd64.tar.gz" --output-document "$tmpDir/go.tar.gz"
-        sudo tar -C /usr/local -xzf "$tmpDir/go.tar.gz"
-    fi
-
-    ## Node.js via fnm
-    curl https://raw.githubusercontent.com/Schniz/fnm/master/.ci/install.sh | bash
+    sudo apt-get install dotnet-sdk-6.0 aspnetcore-runtime-6.0 dotnet-sdk-7.0 aspnetcore-runtime-7.0 -y
 }
 
 echo -e '\e[0;33mPreparing to setup a linux machine from a base install\e[0m'
@@ -90,7 +80,10 @@ mkdir -p ~/code/github
 
 install_git
 source "./setup-shell.sh"
-install_devtools
-install_docker
+## Node.js via fnm
+curl https://raw.githubusercontent.com/Schniz/fnm/master/.ci/install.sh | bash
+
+install_dotnet
+# install_docker
 
 rm -rf $tmpDir

@@ -28,7 +28,8 @@ $packages = @(
     'GitHub.cli',
     'LINQPad.LINQPad.7',
     'Microsoft.WindowsTerminal.Preview',
-    'Docker.DockerDesktop',
+    # 'Docker.DockerDesktop',
+    'RancherDesktop',
     'icsharpcode.ILSpy',
 
     # Editors
@@ -37,6 +38,7 @@ $packages = @(
     # Inspectors
     'Telerik.Fiddler.Classic',
     'Postman.Postman',
+    'ChilliCream.BananaCakePop',
 
     # Browsers
     'Mozilla.Firefox',
@@ -49,6 +51,16 @@ $packages = @(
     'SlackTechnologies.Slack',
     'OpenWhisperSystems.Signal',
 
+    # Misc
+    'Microsoft.Powershell.Preview',
+    'Microsoft.PowerToys',
+    'Microsoft.OneDrive',
+    'NickeManarin.ScreenToGif',
+    'Valve.Steam',
+    'Microsoft.Office',
+
+    # Desktop features
+
     # Video
     'OBSProject.OBSStudio',
     'Nvidia.Broadcast',
@@ -57,16 +69,11 @@ $packages = @(
     'Elgato.StreamDeck',
     'Elgato.ControlCenter',
 
-    # Misc
-    'Microsoft.Powershell.Preview',
-    'Microsoft.PowerToys',
-    'Microsoft.OneDrive',
     'Nvidia.GeForceExperience',
-    'Logitech.Options',
-    'NickeManarin.ScreenToGif',
-    'Valve.Steam',
-    'Microsoft.Office'
+    'Logitech.Options'
 )
+
+wsl --install
 
 $packages | ForEach-Object { winget install --id $_ --source winget }
 
@@ -91,7 +98,6 @@ Write-Host Installing additional software
 wsl --install
 
 Write-Host Manuall install the following
-Write-Host "- Wally (moonlander tool)"
 Write-Host "- Visual Studio DF"
 Write-Host "- Edge Canary"
 Write-Host "- caskaydiacove nf: https://www.nerdfonts.com/font-downloads"
