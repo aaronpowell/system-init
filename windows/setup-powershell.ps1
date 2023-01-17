@@ -23,6 +23,8 @@ function Install-PowerShellModule {
 
 Write-Host Installing PowerShell Modules
 
+Set-ExecutionPolicy -ExecutionPolicy Unrestricted
+
 Install-PowerShellModule 'Posh-Git' { }
 Install-PowerShellModule 'oh-my-posh' { }
 Install-PowerShellModule 'PSReadLine' { }
