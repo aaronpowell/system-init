@@ -62,15 +62,15 @@ $packages = @(
     # Desktop features
 
     # Video
-    'OBSProject.OBSStudio',
-    'Nvidia.Broadcast',
-    'XSplit.VCam',
-    'VB-Audio.Voicemeeter.Potato',
-    'Elgato.StreamDeck',
-    'Elgato.ControlCenter',
+    # 'OBSProject.OBSStudio',
+    # 'Nvidia.Broadcast',
+    # 'XSplit.VCam',
+    # 'VB-Audio.Voicemeeter.Potato',
+    # 'Elgato.StreamDeck',
+    # 'Elgato.ControlCenter',
 
-    'Nvidia.GeForceExperience',
-    'Logitech.Options'
+    # 'Nvidia.GeForceExperience',
+    # 'Logitech.Options'
 )
 
 wsl --install
