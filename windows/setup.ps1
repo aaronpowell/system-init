@@ -1,30 +1,9 @@
-function Install-PowerShellModule {
-    param(
-        [string]
-        [Parameter(Mandatory = $true)]
-        $ModuleName,
-
-        [ScriptBlock]
-        [Parameter(Mandatory = $true)]
-        $PostInstall = {}
-    )
-
-    if (!(Get-Command -Name $ModuleName -ErrorAction SilentlyContinue)) {
-        Write-Host "Installing $ModuleName"
-        Install-Module -Name $ModuleName -Scope CurrentUser
-        Import-Module $ModuleName
-
-        Invoke-Command -ScriptBlock $PostInstall
-    }
-    else {
-        Write-Host "$ModuleName was already installed, skipping"
-    }
-}
-
 Write-Host "Before we start, here's a few question"
 
 $streaming = Read-Host "Setup streaming? (y/n)"
 $desktop = Read-Host "Setup desktop? (y/n)"
+
+wsl --install
 
 Write-Host Installing winget packages
 
@@ -34,7 +13,8 @@ $packages = @(
     'GitHub.cli',
     'LINQPad.LINQPad.7',
     'Microsoft.WindowsTerminal.Preview',
-    'Docker.DockerDesktop',
+    # 'Docker.DockerDesktop',
+    'RancherDesktop',
     'icsharpcode.ILSpy',
     'JanDeDobbeleer.OhMyPosh',
 
@@ -44,6 +24,7 @@ $packages = @(
     # Inspectors
     'Telerik.Fiddler.Classic',
     'Postman.Postman',
+    'ChilliCream.BananaCakePop',
 
     # Browsers
     'Mozilla.Firefox',
@@ -81,33 +62,12 @@ if ($desktop -eq "y") {
 
 $packages | ForEach-Object { winget install --id $_ --source winget }
 
-Write-Host Installing PowerShell Modules
+Write-Host Setting up PowerShell
 
-Set-ExecutionPolicy -ExecutionPolicy Unrestricted
-
-Install-PowerShellModule 'Posh-Git' { }
-Install-PowerShellModule 'PSReadLine' { }
-Install-PowerShellModule 'Terminal-Icons' { }
-Install-PowerShellModule 'nvm' {
-    Install-NodeVersion latest
-    Set-NodeVersion -Persist User latest
-}
-
-Write-Host Setting up dotfiles
-
-$repoBaseUrl = 'https://raw.githubusercontent.com/aaronpowell/system-init/main'
-
-Invoke-WebRequest -Uri "$repoBaseUrl/common/.gitconfig" -OutFile (Join-Path $env:USERPROFILE '.gitconfig')
-Invoke-WebRequest -Uri "$repoBaseUrl/windows/Microsoft.PowerShell_profile.ps1" -OutFile $PROFILE
-Invoke-WebRequest -Uri "$repoBaseUrl/windows/Microsoft.PowerShell_profile.ps1" -OutFile $PROFILE.Replace("WindowsPowerShell", "PowerShell")
-
-Write-Host Installing additional software
-
-wsl --install
-wsl --exec "curl $repoBaseUrl/linux/setup.sh | bash"
+Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/aaronpowell/system-init/main/windows/setup-powershell.ps1'))
+pwsh -c "Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/aaronpowell/system-init/main/windows/setup-powershell.ps1'))"
 
 Write-Host Manuall install the following
-Write-Host "- Wally (moonlander tool)"
 Write-Host "- Visual Studio DF"
 Write-Host "- Edge Canary"
 Write-Host "- caskaydiacove nf: https://www.nerdfonts.com/font-downloads"
