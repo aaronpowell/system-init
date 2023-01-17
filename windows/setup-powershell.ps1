@@ -29,7 +29,7 @@ Install-PowerShellModule 'PSReadLine' { }
 Install-PowerShellModule 'Terminal-Icons' { }
 Install-PowerShellModule 'nvm' {
     Install-NodeVersion latest
-    Set-NodeVersion -Persist User latest
+    Set-NodeVersion latest -Persist User
 }
 
 Write-Host Setting up dotfiles
