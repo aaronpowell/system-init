@@ -95,8 +95,6 @@ Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/aaronpowell/system-ini
 
 Write-Host Installing additional software
 
-wsl --install
-
 Write-Host Manuall install the following
 Write-Host "- Visual Studio DF"
 Write-Host "- Edge Canary"
