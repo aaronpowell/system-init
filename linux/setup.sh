@@ -81,7 +81,7 @@ mkdir -p ~/code/github
 install_git
 source "./setup-shell.sh"
 ## Node.js via fnm
-curl https://raw.githubusercontent.com/Schniz/fnm/master/.ci/install.sh | bash
+curl -fsSL https://fnm.vercel.app/install | bash
 
 install_dotnet
 # install_docker
