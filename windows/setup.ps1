@@ -14,7 +14,7 @@ $packages = @(
     'LINQPad.LINQPad.7',
     'Microsoft.WindowsTerminal.Preview',
     # 'Docker.DockerDesktop',
-    'RancherDesktop',
+    'suse.RancherDesktop',
     'icsharpcode.ILSpy',
     'JanDeDobbeleer.OhMyPosh',
 
