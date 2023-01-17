@@ -37,17 +37,17 @@ install_shell() {
 install_dotfiles() {
     echo -e '\e[0;33mSetting up standard dotfiles\e[0m'
 
-    git clone https://github.com/aaronpowell/system-init ~/code/github/system-init
+    git clone https://github.com/aaronpowell/dotfiles ~/code/github/dotfiles
 
-    LINUX_SCRIPTS_DIR="$( cd "$( dirname "$0" )" >/dev/null 2>&1 && pwd )"
+    LINUX_SCRIPTS_DIR="$( readlink -f ~/code/github/dotfiles )"
 
     ln -s $LINUX_SCRIPTS_DIR/.zshrc ~/.zshrc
     # ln -s $LINUX_SCRIPTS_DIR/.tmux.conf ~/.tmux/.tmux.conf
     ln -s $LINUX_SCRIPTS_DIR/.vimrc ~/.vimrc
     ln -s $LINUX_SCRIPTS_DIR/.urlview ~/.urlview
-    ln -s $LINUX_SCRIPTS_DIR/../common/.gitconfig ~/.gitconfig
+    ln -s $LINUX_SCRIPTS_DIR/.gitconfig ~/.gitconfig
     git config --global core.autocrlf false
-    ln -s $LINUX_SCRIPTS_DIR/../common/gh-config.yml ~/.config/gh/config.yml
+    ln -s $LINUX_SCRIPTS_DIR/gh-config.yml ~/.config/gh/config.yml
 
     ## Only setup cred manager if it's wsl
     if [[ "$WSLENV" ]]
