@@ -15,9 +15,9 @@ install_shell() {
     } || {
         log "Failed to set zsh as default shell: $CMD"
     }
-    ZSH_CUSTOM=~/.oh-my-zsh/custom
-    git clone https://github.com/denysdovhan/spaceship-prompt.git "$ZSH_CUSTOM/themes/spaceship-prompt"
-    ln -s "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" "$ZSH_CUSTOM/themes/spaceship.zsh-theme"
+    # ZSH_CUSTOM=~/.oh-my-zsh/custom
+    # git clone https://github.com/denysdovhan/spaceship-prompt.git "$ZSH_CUSTOM/themes/spaceship-prompt"
+    # ln -s "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" "$ZSH_CUSTOM/themes/spaceship.zsh-theme"
 
     ## tmux
     # {
@@ -28,10 +28,16 @@ install_shell() {
     # git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
     ## install GitHub CLI
-    sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key C99B11DEB97541F0
-    sudo apt-add-repository https://cli.github.com/packages
-    sudo apt update
-    sudo apt install gh
+    (type -p wget >/dev/null || (sudo apt update && sudo apt-get install wget -y)) \
+    && sudo mkdir -p -m 755 /etc/apt/keyrings \
+    && wget -qO- https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null \
+    && sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg \
+    && echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
+    && sudo apt update \
+    && sudo apt install gh -y
+
+    # install copilot extension
+    gh extension install github/gh-copilot
 }
 
 install_dotfiles() {
@@ -52,7 +58,7 @@ install_dotfiles() {
     ## Only setup cred manager if it's wsl
     if [[ "$WSLENV" ]]
     then
-        git config --global credential.helper '/mnt/c/Program\ Files/Git/mingw64/bin/git-credential-manager-core.exe'
+        git config --global credential.helper '/mnt/c/Program\ Files/Git/mingw64/bin/git-credential-manager.exe'
     fi
 
     # tmux source ~/.tmux/.tmux.conf

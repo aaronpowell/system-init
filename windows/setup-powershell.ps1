@@ -35,5 +35,5 @@ Install-PowerShellModule 'nvm' {
 
 Write-Host Setting up dotfiles
 
-Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/aaronpowell/system-init/main/common/.gitconfig' -OutFile (Join-Path $env:USERPROFILE '.gitconfig')
+Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/aaronpowell/dotfiles/main/.gitconfig' -OutFile (Join-Path $env:USERPROFILE '.gitconfig')
 Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/aaronpowell/system-init/main/windows/Microsoft.PowerShell_profile.ps1' -OutFile $PROFILE
