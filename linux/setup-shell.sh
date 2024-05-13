@@ -18,6 +18,7 @@ install_shell() {
     # ZSH_CUSTOM=~/.oh-my-zsh/custom
     # git clone https://github.com/denysdovhan/spaceship-prompt.git "$ZSH_CUSTOM/themes/spaceship-prompt"
     # ln -s "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" "$ZSH_CUSTOM/themes/spaceship.zsh-theme"
+    git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 
     ## tmux
     # {
@@ -37,7 +38,7 @@ install_shell() {
     && sudo apt install gh -y
 
     # install copilot extension
-    gh extension install github/gh-copilot
+    # gh extension install github/gh-copilot
 }
 
 install_dotfiles() {
@@ -64,5 +65,6 @@ install_dotfiles() {
     # tmux source ~/.tmux/.tmux.conf
 }
 
-install_dotfiles
 install_shell
+install_dotfiles
+

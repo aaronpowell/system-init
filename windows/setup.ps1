@@ -71,8 +71,9 @@ $packages | ForEach-Object { winget install --id $_ --source winget }
 Write-Host Setting up PowerShell
 
 Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/aaronpowell/system-init/main/windows/setup-powershell.ps1'))
-pwsh -c "Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/aaronpowell/system-init/main/windows/setup-powershell.ps1'))"
-pwsh -c "gh extension install github/gh-copilot"
+# pwsh -c "Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/aaronpowell/system-init/main/windows/setup-powershell.ps1'))"
+& C:\Program Files\PowerShell\7-preview\pwsh.exe -c "Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/aaronpowell/system-init/main/windows/setup-powershell.ps1'))"
+# pwsh -c "gh extension install github/gh-copilot"
 
 Write-Host Manuall install the following
 Write-Host "- Visual Studio DF"

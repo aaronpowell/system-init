@@ -57,7 +57,7 @@ install_dotnet() {
     sudo dpkg -i packages-microsoft-prod.deb
     sudo add-apt-repository universe --yes
     sudo apt-get update
-    sudo apt-get install dotnet-sdk-6.0 aspnetcore-runtime-6.0 dotnet-sdk-7.0 aspnetcore-runtime-7.0 -y
+    sudo apt-get install dotnet-sdk-8.0 aspnetcore-runtime-8.0 -y
 }
 
 echo -e '\e[0;33mPreparing to setup a linux machine from a base install\e[0m'
@@ -87,3 +87,5 @@ install_dotnet
 # install_docker
 
 rm -rf $tmpDir
+
+curl https://raw.githubusercontent.com/aaronpowell/system-init/main/linux/setup-shell.sh | bash
